@@ -8,7 +8,6 @@ list <- list.files("C:\\Users\\cew27\\Dropbox (Personal)\\R\\Phadia Test")
 list<- paste("C:\\Users\\cew27\\Dropbox (Personal)\\R\\Phadia Test\\", list, sep="")
 
 for (step in 1:length(list)) {
-  step=2
 
 phadia <- read.csv(list[step], header=T, skip = 7, na.strings = "")
 
@@ -30,7 +29,8 @@ phadia$study_id <- gsub("_.*", "", phadia$study_id)
 phadia$visitNum <- phadia$sampleID
 phadia$visitNum <- gsub(".*_", "", phadia$visitNum)
 
-phadia$file <- rep(list[step])
+#puts the original file name in. Comment back in for troubleshooting.
+#phadia$file <- rep(list[step])
 
 #convert the concentration readings to numerics rather than factors.
 
@@ -127,3 +127,4 @@ rcorder <- c("study_id", "redcap_event_name", "subject_enrollment_number", "pean
 
 
 #Add similar clean ups for other projects as needed here
+
