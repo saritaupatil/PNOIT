@@ -3,9 +3,25 @@
 rm(list=ls())
 
 #your directory goes here
+
+# check for windows/unix platform and make little compatibility adjustments
+switch(Sys.info()[['sysname']],
+       Windows = {print("I'm a Windows PC and the call to windows() should work as is.")},
+       Linux   = {print("I'm a penguin and windows() will break but I'm not sure what graphics device you want to use.")},
+       Darwin  = {print("I'm a Mac and I'm redirecting windows() to quartz()."); windows <- function(width,height) quartz(title="untitled",width, height)})
+# as an exmaple, the above snippet redefines the function windows() so that calls to that from a Mac will still work.
+# perhaps someone would care to add code to line 9 to redefine quartz() for PC users?
+# meanwhile, Cecilia or another PC user might fully assess whether there are any remaining issues with file paths since we agreed that PC users would move 'Dropbox (ShreffLabDrop)' to the Documents folder. That will allow the use of the '~' character to specify the appropriate 'home' folder on either platform
+
+# I put Cecilia's test files up on Dropbox
+
 filenum <- 0
-list <- list.files("C:\\Users\\cew27\\Dropbox (Personal)\\R\\Phadia Test")
-list<- paste("C:\\Users\\cew27\\Dropbox (Personal)\\R\\Phadia Test\\", list, sep="")
+list <- list.files("~/Dropbox (ShreffLabDrop)/Projects/PNOIT/Sample Phadia Output") # alternative here on unix would be to pipe a ls to get the entire path in one go
+list<- paste("~/Dropbox (ShreffLabDrop)/Projects/PNOIT/Sample Phadia Output", list, sep="/")
+
+
+
+
 
 for (step in 1:length(list)) {
 
@@ -42,7 +58,7 @@ phadia$conc <- as.numeric(as.character(phadia$conc))
 v <- vector(mode="logical", length=0)
 for (i in 1:length(phadia$conc)){
   v[i] <- (phadia$conc[i] < 0.1)
-}   
+}
 phadia$conc[v] <- 0
 
 #change over-the-limit concentrations to ">"
@@ -55,7 +71,7 @@ for (i in 1:length(phadia$max)){
 v <- vector(mode="logical", length=0)
 for (i in 1:length(phadia$conc)){
   v[i] <- (phadia$conc[i] > phadia$max[i])
-}   
+}
 phadia$conc[v] <- paste(">",phadia$max[v], sep="")
 
 if(filenum == 0){
@@ -98,8 +114,8 @@ con <- grep("965-04|965-09|965-10|965-11|965-15", `965`$study_id)
 
 `965`$redcap_event_name[-con] <- paste(`965`$redcap_event_name[-con], "(Arm 2: Active Group Arm)", sep=" ")
 
-#con3 <- grep("Follow up #. .Arm 4",`965`$redcap_event_name) 
-#`965`$redcap_event_name[con3] <- gsub("*\\(.*?\\) *", "\\(Arm 3: Control Group Arm\\)",`965`$redcap_event_name[con3]) 
+#con3 <- grep("Follow up #. .Arm 4",`965`$redcap_event_name)
+#`965`$redcap_event_name[con3] <- gsub("*\\(.*?\\) *", "\\(Arm 3: Control Group Arm\\)",`965`$redcap_event_name[con3])
 
 `965`$redcap_event_name <- gsub("BL \\(.*?\\)", "Baseline (Arm 1: Enrollment/Baseline)", `965`$redcap_event_name)
 
