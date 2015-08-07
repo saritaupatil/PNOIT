@@ -1,11 +1,26 @@
-#script to pull data from the phadia100's .csv run files.
-
 rm(list=ls())
+#######################################################################
+# R code to Clean up Phadia IgE
+# Created by Cecilia Washburn
+
+# Goal: pull IgE data from the phadia100's .csv run files 
+# and arrange them into a RedCap-friendly file
+
+#######################################################################
+#
+#######################################################################
+
+switch(Sys.info()[['sysname']],
+       Windows = {print("I'm a Windows PC and the remote drive path should use \\")},
+       Linux   = {print("I'm a penguin and the remote drive path should use /. Unless that gives an error, in which case you should try // and edit this message for me.")},
+       Darwin  = {print("I'm a Mac and the remote drive path should use /")})
+
 
 #your directory goes here
 filenum <- 0
-list <- list.files("C:\\Users\\cew27\\Dropbox (Personal)\\R\\Phadia Test")
-list<- paste("C:\\Users\\cew27\\Dropbox (Personal)\\R\\Phadia Test\\", list, sep="")
+list <- list.files("Z:\\ShreffLabRemote\\Phadia Results\\IgE")
+list<- paste("Z:\\ShreffLabRemote\\Phadia Results\\IgE\\", list, sep="")
+file965 <-"C:/Users/cew27/Dropbox (Personal)/R/PNOIT/IgE_Readout.csv"
 
 for (step in 1:length(list)) {
 
@@ -125,6 +140,12 @@ rcorder <- c("study_id", "redcap_event_name", "subject_enrollment_number", "pean
 
 `965` <- `965`[c("study_id", "redcap_event_name", "subject_enrollment_number", "peanut_f13", "rara_h_1_peanut_f422","rara_h_2_peanut_f423", "rara_h_3_peanut_f424", "rara_h_8_peanut_f352", "rara_h_9_peanut_f427", "total_ige_peanut")]
 
+#Save it
+write.csv(`965`, file965)
 
 #Add similar clean ups for other projects as needed here
 
+#To Do List:
+#Do something about the control Follow Up problem
+#Fix the non-standardized sample names so typos don't ruin the script.
+#Fix the moving column name problem when .csvs are read into R
