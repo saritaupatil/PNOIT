@@ -10,17 +10,13 @@ rm(list=ls())
 #
 #######################################################################
 
-switch(Sys.info()[['sysname']],
-       Windows = {print("I'm a Windows PC and the remote drive path should use \\")},
-       Linux   = {print("I'm a penguin and the remote drive path should use /. Unless that gives an error, in which case you should try // and edit this message for me.")},
-       Darwin  = {print("I'm a Mac and the remote drive path should use /")})
 
-
-#your directory goes here
 filenum <- 0
-list <- list.files("Z:\\ShreffLabRemote\\Phadia Results\\IgE")
-list<- paste("Z:\\ShreffLabRemote\\Phadia Results\\IgE\\", list, sep="")
-file965 <-"C:/Users/cew27/Dropbox (Personal)/R/PNOIT/IgE_Readout.csv"
+list <- list.files("//rfa01.research.partners.org/MGH-CIID/ShreffLabRemote/Phadia Results/IgE")
+list<- paste("//rfa01.research.partners.org/MGH-CIID/ShreffLabRemote/Phadia Results/IgE/", list, sep="")
+
+#Default is to print the .csv in your working directory. Writing in a file path here will change where it prints.
+file965 <-"IgE_Readout.csv"
 
 for (step in 1:length(list)) {
 
@@ -148,4 +144,4 @@ write.csv(`965`, file965)
 #To Do List:
 #Do something about the control Follow Up problem
 #Fix the non-standardized sample names so typos don't ruin the script.
-#Fix the moving column name problem when .csvs are read into R
+#Fix the moving column name problem when .csvs are read into the script
