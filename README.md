@@ -14,6 +14,8 @@ Under ANY OTHER CIRCUMSTANCES this would ruin your column names and you would wa
 For two of the files (so far), it inserts an entire new column for row numbers and the columns remained matched with their original names, which conflicts with the rest of my script.
 The files are IgE-20150129.csv and IgE_20150424.csv and I can't figure out what makes them so special.
 
+Updated (by Sarita): These 2 files seemed to have had errors while exporting off the machine.  A repeat export seems to have fixed the glitch.
+
 Future directions for the Phadia Reader:
 -Once the RedCap databases for other projects are finalized, I can add to this script to pull out their IgE data as well.
 -IgG, IgG4, IgA, etc, will require seperate scripts. It should be a matter of changing some names in this script.
